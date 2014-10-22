@@ -321,7 +321,8 @@ module DocusignRest
           requireIdLookup:                       false,
           roleName:                              signer[:role_name],
           routingOrder:                          signer[:routing_order] || index + 1,
-          socialAuthentications:                 nil
+          socialAuthentications:                 nil,
+          signInEachLocation:                    signer[sign_in_each_location]
         }
 
         if signer[:email_notification]
