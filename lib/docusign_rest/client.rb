@@ -600,8 +600,8 @@ module DocusignRest
         documents: get_documents(ios),
         recipients: {
           signers: get_signers(options[:signers]),
-          editors: get_signers(options[:editors]),
-          carbonCopies: get_signers(options[:carbon_copies]),
+          editors: options[:editors] ? get_signers(options[:editors]) : nil,
+          carbonCopies: options[:carbon_copies] ? get_signers(options[:carbon_copies]) : nil,
         },
         status: "#{options[:status]}"
       }.to_json
