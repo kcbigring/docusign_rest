@@ -599,7 +599,8 @@ module DocusignRest
         emailSubject: "#{options[:email][:subject] if options[:email]}",
         documents: get_documents(ios),
         recipients: {
-          signers: get_signers(options[:signers])
+          signers: get_signers(options[:signers]),
+          editors: get_signers(options[:editors])
         },
         status: "#{options[:status]}"
       }.to_json
