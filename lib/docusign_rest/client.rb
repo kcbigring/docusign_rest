@@ -317,7 +317,7 @@ module DocusignRest
           note:                                  '',
           phoneAuthentication:                   nil,
           recipientAttachment:                   nil,
-          recipientId:                           "#{signer[:recipient_id]}" || "#{index + 1}",
+          recipientId:                           signer[:recipient_id] || "#{index + 1}",
           requireIdLookup:                       false,
           roleName:                              signer[:role_name],
           routingOrder:                          signer[:routing_order] || index + 1,
@@ -1249,7 +1249,8 @@ module DocusignRest
     #                                address.
     #
     # Returns the hash that is used for the
-    def get_email_override_settings(settings={})
+    def get_email_override_settings(settings)
+      return {} unless settings
       {
         replyEmailAddressOverride: settings[:reply_email_address_override],
         replyEmailNameOverride: settings[:reply_email_name_override],
