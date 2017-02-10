@@ -459,7 +459,7 @@ module DocusignRest
                  file[:io] || file[:path],
                  file[:content_type] || 'application/pdf',
                  file[:name],
-                 'Content-Disposition' => "file; documentid=#{index + 1}"
+                 {'Content-Disposition' => "file; documentid=#{index + 1}", :transform_pdf_fields => file[:transform_pdf_fields]}
                )
       end
       ios
@@ -490,7 +490,8 @@ module DocusignRest
       ios.each_with_index.map do |io, index|
         {
           documentId: "#{index + 1}",
-          name: io.original_filename
+          name: io.original_filename,
+          transformPdfFields: io.opts[:transform_pdf_fields] ? io.opts[:transform_pdf_fields] : false
         }
       end
     end
