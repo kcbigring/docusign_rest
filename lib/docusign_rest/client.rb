@@ -416,6 +416,12 @@ module DocusignRest
 
         tab_hash[:list_items] = tab[:list_items] if tab[:list_items]
 
+        [:bold, :font, :fontColor, :fontSize, :italic, :underline].each do |style|
+          if (value = tab[style.to_s.snakecase.to_sym])
+            tab_hash[style] = value
+          end
+        end
+
         tab_array << tab_hash
       end
       tab_array
