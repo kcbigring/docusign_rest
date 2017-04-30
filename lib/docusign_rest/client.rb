@@ -622,6 +622,20 @@ module DocusignRest
       JSON.parse(response.body)
     end
 
+    def delete_template(template_id, options = {})
+      content_type = { 'Content-Type' => 'application/json' }
+      content_type.merge(options[:headers]) if options[:headers]
+
+      uri = build_uri("/templates/#{template_id}")
+
+      http = initialize_net_http_ssl(uri)
+      request = Net::HTTP::Delete.new(uri.request_uri, headers(content_type))
+      response = http.request(request)
+      json = response.body
+      json = '{}' if json.nil? || json == ''
+      JSON.parse(json)
+    end
+
 
     # Public: allows a template to be dynamically created with several options.
     #
