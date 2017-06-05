@@ -798,6 +798,8 @@ module DocusignRest
 
       post_body = {
         status:             options[:status],
+        emailBlurb:         options[:email][:body],
+        emailSubject:       options[:email][:subject],
         compositeTemplates: get_composite_template(options[:server_template_ids], options[:signers]),
         emailSettings:      get_email_override_settings(options[:email_settings])
       }.to_json
