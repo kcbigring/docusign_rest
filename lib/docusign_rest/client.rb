@@ -520,7 +520,6 @@ module DocusignRest
       composite_array
     end
 
-
     # Internal: takes signer info and the inline template sequence number
     # and sets up the inline template
     #
@@ -530,9 +529,22 @@ module DocusignRest
       signers.each do |signer|
         signers_hash = Hash[:email, signer[:email], :name, signer[:name], \
           :recipientId, signer[:recipient_id], :roleName, signer[:role_name]]
+
+        # tab stuff
+        signers_hash[:tabs] = {
+            textTabs:     get_signer_tabs(signer[:text_tabs]),
+            checkboxTabs: get_signer_tabs(signer[:checkbox_tabs]),
+            numberTabs:   get_signer_tabs(signer[:number_tabs]),
+            fullNameTabs: get_signer_tabs(signer[:fullname_tabs]),
+            dateTabs:     get_signer_tabs(signer[:date_tabs])
+        }
         if signer[:embedded]
           signers_hash[:clientUserId] = signer[:client_id] || signer[:email]
         end
+        if signer[:email_notification]
+          signers_hash[:emailNotification] = signer[:email_notification]
+        end
+
         signers_array << signers_hash
       end
       template_hash = Hash[:sequence, sequence, :recipients, { signers: signers_array }]
